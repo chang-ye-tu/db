@@ -1,0 +1,20 @@
+# 教師私用（題庫與指派規則）——不得公開
+private/
+
+# 建置鷹架（本機工具，不進公開 repo）
+_build/
+
+# notebook 執行殘留
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+*.csv
+*.parquet
+*.wal
+__pycache__/
+.ipynb_checkpoints/
+
+# 編輯器暫存
+.*.swp
+.*.swo
