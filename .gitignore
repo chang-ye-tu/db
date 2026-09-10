@@ -4,6 +4,9 @@ private/
 # 建置鷹架（本機工具，不進公開 repo）
 _build/
 
+# AI 稽核往返（含教師題庫與解答細節，不進公開 repo）
+audits/
+
 # notebook 執行殘留
 *.db
 *.db-journal

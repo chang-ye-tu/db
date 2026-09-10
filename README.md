@@ -2,7 +2,7 @@
 
 - 📋 [課程大綱與每週講義大綱](syllabus.md)
 - 🚀 [專題規範：題目與評分](projects.md)（教師指派題目・個人獨立完成・SQLite＋Gradio・15 分鐘簡報含 demo）
-- 🎬 教師示範專題（完整程式與錄影；非指派題目）：[圖書館借閱管理系統](demo/library/)・[個人記帳分析 MoneyBook](demo/moneybook/)
+- 🎬 教師示範專題（完整程式；非指派題目）：[圖書館借閱管理系統](demo/library/)・[個人記帳分析 MoneyBook](demo/moneybook/)
 
 ## 教科書
 
@@ -24,7 +24,7 @@
 | 09/17 | [U02 SQL（一）：關聯模型、建表約束與單表查詢](notebooks/unit02.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit02.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 09/24 | [U03 SQL（二）：join、聚合、子查詢與 window functions](notebooks/unit03.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit03.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/01 | [U04 資料庫設計：ER 模型與正規化](notebooks/unit04.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit04.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 10/08 | [U05 應用開發（一）：sqlite3 深入、Gradio 入門](notebooks/unit05.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit05.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+| 10/08 | [U05 應用開發（一）：sqlite3 深入、交易、Gradio 入門](notebooks/unit05.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit05.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/15 | [U06 應用開發（二）：完整應用模式、儲存引擎](notebooks/unit06.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit06.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/22 | [U07 索引與效能](notebooks/unit07.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit07.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/29 | 期中考週（停課） | |
@@ -41,7 +41,7 @@
 
 ## 評分標準
 
-- 專題（70%）
+- 期末專題（70%）
 - 平時（30%）
 
 ## AI 協作政策（重要）
