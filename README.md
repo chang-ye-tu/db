@@ -27,15 +27,15 @@
 | 10/08 | [U05 應用開發（一）：sqlite3 深入、交易、Gradio 入門](notebooks/unit05.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit05.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/15 | [U06 應用開發（二）：完整應用模式、儲存引擎](notebooks/unit06.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit06.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/22 | [U07 索引與效能](notebooks/unit07.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit07.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 10/29 | 期中考週（停課） | |
-| 11/05 | [U08 查詢處理與最佳化：打造迷你 SQL 引擎](notebooks/unit08.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit08.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 11/12 | [U09 交易與復原、現代資料庫速覽](notebooks/unit09.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit09.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 11/19 | 專題報告 I   | |
-| 11/26 | 專題報告 II  | |
-| 12/03 | 專題報告 III | |
-| 12/10 | 專題報告 IV  | |
-| 12/17 | 專題報告 V   | |
-| 12/24 | 專題報告 VI  | |
+| 10/29 | [U08 查詢處理與最佳化：打造迷你 SQL 引擎](notebooks/unit08.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit08.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+| 11/05 | [U09 交易與復原、現代資料庫速覽](notebooks/unit09.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit09.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
+| 11/12 | 專題報告 I   | |
+| 11/19 | 專題報告 II  | |
+| 11/26 | 專題報告 III | |
+| 12/03 | 專題報告 IV  | |
+| 12/10 | 專題報告 V   | |
+| 12/17 | 專題報告 VI  | |
+| 12/24 | 專題報告 VII | |
 
 自學補充：[extra 現代資料庫速覽（NoSQL・LSM・列式・向量・Text-to-SQL）](notebooks/extra_modern.ipynb) <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/extra_modern.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
