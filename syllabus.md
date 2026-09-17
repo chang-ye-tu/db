@@ -77,24 +77,22 @@
 - **課堂實作**：索引偵探（先預測計畫再驗證）；對自己專題資料做索引前後計時。
 - 讀物：Silberschatz ch14；Ullman ch14；Winand《SQL Performance Explained》。
 
-### —（10/29）期中考週：本課停課
-
-### U08（11/05）查詢處理與最佳化：打造迷你 SQL 引擎
+### U08（10/29）查詢處理與最佳化：打造迷你 SQL 引擎
 `notebooks/unit08.ipynb`
 - **第 1 節**：SQL 的一生（parse→關聯代數→實體計畫→執行）；夠用的關聯代數（σ π ⋈ γ）；**教師現場實作 mini SQL 引擎**（tokenizer→遞迴下降 parser→AST→執行器）；iterator（volcano）模型。
 - **第 2 節**：join 演算法（nested loop／block NL／hash／sort-merge）與 I/O 成本；Python 實測 NL vs hash 差百倍；等價變換與謂詞下推；join 順序與 n! 爆炸；成本估計靠統計（`ANALYZE`、`sqlite_stat1`、計畫翻轉實錄）；估計會錯：偏斜與相關性；**DuckDB 列式引擎對決**。
 - **課堂實作**：計畫閱讀＋join 量測＋把 EXPLAIN 用回自己的專題。
 - 讀物：Silberschatz ch15–16；Ullman ch15–16。
 
-### U09（11/12）交易與復原、現代資料庫速覽
+### U09（11/05）交易與復原、現代資料庫速覽
 `notebooks/unit09.ipynb`
 - **第 1 節**：ACID 逐字；轉帳中途 crash→rollback；**兩條 connection 重現並行異常**（lost update／nonrepeatable read／phantom）；隔離級別總表；鎖、2PL、死結；MVCC 與 WAL 模式。
 - **第 2 節**：durability 與部分寫入；WAL 原理；**子行程 `os._exit()` 當機模擬**（journal 保資料完好）；`synchronous` 速度/安全取捨實測；30 行玩具 WAL replay；**現代資料庫速覽**：LSM-tree、列式、向量庫（AI 檢索 demo）、文件庫（SQLite JSON）——細節在 `extra_modern.ipynb`。
 - **★報告規範（35）**：15 分鐘結構模板；demo 腳本化與備援；rubric 重申；常見翻車；檢查清單；兩題共同要求的 Q&A 演練。
 - 讀物：Silberschatz ch17–19 選讀；Ullman ch17–18 選讀。
 
-### U10–U15（11/19、11/26、12/03、12/10、12/17、12/24）專題報告 I–VI
-- 每人 15 分鐘（12 簡報含 demo ＋ 2 Q&A ＋ 1 換場），時間到即切；場次與順序課堂公布。
+### U10–U15（11/12、11/19、11/26、12/03、12/10、12/17、12/24）專題報告 I–VII
+- 每人 15 分鐘（12 簡報含 demo ＋ 2 Q&A ＋ 1 換場），時間到即切；場次與順序待公布。
 - 現場用自己的 Colab 展示；報告結束後繳交最終版 `.ipynb`。
 
 ### 自學補充：`notebooks/extra_modern.ipynb`
