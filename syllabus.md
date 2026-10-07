@@ -1,7 +1,7 @@
 # 課程與每週講義大綱
 
 - **課程**：資料庫管理
-- **講義**：目前發布 `notebooks/unit01.ipynb` 至 `unit04.ipynb`，包含規則、執行範例、驗證及綜合練習；U05–U09 待重新編修。另有自學補充 `notebooks/extra_modern.ipynb`，歷史版本見 [archive](archive/README.md)。
+- **講義**：目前發布 `notebooks/unit01.ipynb` 至 `unit05.ipynb`，包含規則、執行範例、驗證及綜合練習；U06–U09 待重新編修。另有自學補充 `notebooks/extra_modern.ipynb`，歷史版本見 [archive](archive/README.md)。
 - **先修**：Python（U01 課堂自我檢測；不足者依檢測結果補 Beazley [Practical Python Programming](https://github.com/dabeaz-course/practical-python)）
 - **教科書（參考用，課堂以講義為準）**：
   - Silberschatz, Korth, Sudarshan, *Database System Concepts*, 7th ed.（章末 Practice Exercises 官方解答：https://www.db-book.com/）
@@ -12,7 +12,7 @@
 ## 課程設計：一條「用」的主線 ＋ 一條「懂」的支線
 
 - **主線（U01–U06）**：Python 資料處理與資料管理觀念 → SQL → 資料建模 → Python 資料層 → PostgreSQL 的服務與權限 → Gradio 應用開發。課程使用 SQLite 與 PostgreSQL；指派專題仍使用 SQLite 與 Gradio（詳 [projects.md](projects.md)），期末 15 分鐘簡報含 live demo。
-- **實作環境**：U02–U04 使用 SQLite，區分標準 SQL 與 SQLite 語法，不安排其他資料庫的語法或行為對照。PostgreSQL 從 U05 正式引進；U01 僅保留系統選型介紹。
+- **實作環境**：U02–U04 使用 SQLite，區分標準 SQL 與 SQLite 語法，不安排其他資料庫的語法或行為對照。PostgreSQL 的引進單元另行公布；U01 僅保留系統選型介紹。
 - **支線（U06–U09，教師講授與現場實作示範）**：資料庫內部原理——儲存引擎、索引結構、查詢處理與最佳化、交易與復原、現代資料庫（列式／LSM／向量／文件）。
 
 ## 評分
@@ -81,15 +81,20 @@
 - **綜合練習與專題銜接**：以圖書借閱檢查能否把已教方法用於新需求，辨認書目、副本及借閱的關係，再完成 ER、DDL、正常／違規資料與查詢。作答在前，參考答案與理由在後。
 - 讀物：Silberschatz ch6–7；Ullman ch3–4。
 
-### U05（10/08）Python 資料層、PostgreSQL 與 Gradio
-待重新編修。
-- **1**：短連線資料層；cursor、Row、參數與動態識別字；轉帳、失敗回滾與 savepoint；日期適配、批次匯入及公平量測。
-- **2**：獨立 PostgreSQL 服務、database/schema/role；Psycopg、identity、NUMERIC、日期與時點；失敗交易、最小權限、view 授權與 COPY。
-- **3**：可驗證的合成資料；Interface → Blocks；查詢、新增、選列、State、報表、CSV 與三分頁應用。
-- **PostgreSQL 挑戰**：普通報表角色能讀指定 view，但不能改表或讀敏感欄；COPY 失敗整批撤銷。延伸 RLS 驗證直接 SQL 也不能偽造擁有者。
-- **綜合練習**：資料層修改函數、UI 連接、角色權限與資料生成驗收。
-- **延伸**：缺值及離群生成、完整四表購買／退款、專題規格與示範程式導讀。
-- 讀物：Python sqlite3、Psycopg、PostgreSQL 權限與 Gradio 官方文件。
+### U05（10/08）從資料庫到可以展示的應用
+
+`notebooks/unit05.ipynb`
+
+以「系上獎學金申請與名額核定」為貫穿情境（學生、獎學金、申請、評分四表），把專題共同要求逐項示範一次。本單元使用 SQLite，不安排 PostgreSQL。
+
+- **1 資料層**：全域連線在另一執行緒失敗的原因；短連線與連線工廠（每條連線開外鍵檢查）；`transaction()` 同時管理連線與交易；資料層函數的規則；`ValueError` 中文訊息與 `friendly`／`safe_call`；條件式更新；測試資料庫、每個測試前重建、查回資料狀態。
+- **2 合成資料**：先寫生成假設；固定 seed；依資格與熱門度抽樣、拖延型申請時間、審查評分與核定；numpy 整數被存成 BLOB 的陷阱；單一交易批次匯入；以「找違規」查詢驗收規則，以圖驗收分布。
+- **3 交易與競態**：內層函數不提交、外層組成交易；兩條連線手動交錯重現超額核定；條件式 `UPDATE` 與 `BEGIN IMMEDIATE` 兩種防護；以 Barrier 讓多個執行緒真正同時操作；回歸測試。
+- **4 報表與效能**：問題 → 粒度 → SQL → 圖；LEFT JOIN 含零、條件計數、分母、RANK／累計和；圖表函數回傳 Figure；自動索引、複合索引最左欄、`EXPLAIN QUERY PLAN`、建索引前後的中位數計時與代價。
+- **5 Gradio**：Interface → Blocks；`click(fn, inputs, outputs)` 的約定；回呼函數只接線且可直接測試；Dropdown 顯示名稱傳主鍵；選列與 State；報表分頁；三分頁應用。
+- **6 專題**：共同要求逐條對照做法與證據；demo 腳本、可重置狀態與備援；AI 使用說明寫法。
+- **練習**：不核定、成績與申請數、撤回遞補、委員寬嚴報表、只能撤回自己的申請；綜合練習為把五個步驟搬到自己的題目。
+- 讀物：Python `sqlite3`、SQLite `EXPLAIN QUERY PLAN` 與 Gradio 官方文件。
 
 ### U06（10/15）資料異動、競爭控制與儲存頁
 待重新編修。

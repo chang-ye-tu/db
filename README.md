@@ -24,7 +24,7 @@
 | 09/17 | [U02 SQL（一）：資料表、查詢與資料異動](notebooks/unit02.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit02.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 09/24 | [U03 SQL（二）：語法、查詢推理與報表](notebooks/unit03.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit03.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/01 | [U04 從需求到可驗證的資料庫設計](notebooks/unit04.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit04.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
-| 10/08 | U05 Python 資料層、PostgreSQL 與 Gradio | 待重新編修 |
+| 10/08 | [U05 從資料庫到可以展示的應用](notebooks/unit05.ipynb) | <a href="https://colab.research.google.com/github/chang-ye-tu/db/blob/master/notebooks/unit05.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a> |
 | 10/15 | U06 資料異動、競爭控制與儲存頁 | 待重新編修 |
 | 10/22 | U07 索引結構與工作負載效能 | 待重新編修 |
 | 10/29 | U08 查詢處理與最佳化：打造迷你 SQL 引擎 | 待重新編修 |
