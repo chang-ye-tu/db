@@ -18,7 +18,7 @@
 | 開發與展示平台 | **Google Colab**（一個 `.ipynb` 檔案完成整個專題） | 具備瀏覽器與網路連線就能跑 |
 | 資料庫 | **SQLite**（Python 內建 `sqlite3`） | 零安裝、單檔、課堂主力 |
 | GUI | **Gradio**（`import gradio as gr`；Colab 直接內嵌） | 簡單、AI 產碼品質高、`share=True` 一鍵得到臨時網址，報告時可讓同學手機操作 |
-| 資料處理與圖表 | pandas ＋ matplotlib（圖表以 `gr.Plot` 嵌入介面） | 統計系本行 |
+| 資料處理與圖表 | matplotlib（圖表以 `gr.Plot` 嵌入介面）；pandas 可用可不用 | 統計系本行；彙整、樞紐用 SQL 就做得到，`gr.Dataframe` 也能直接顯示查詢結果（示範專題全程沒用 pandas） |
 | 資料合成 | numpy（**固定 random seed**，重跑可重現） | 沒有真使用者，就自己造出擬真流量 |
 
 > Colab 上安裝：`!pip -q install gradio`（每次開新 runtime 跑一次，約 30 秒）。
