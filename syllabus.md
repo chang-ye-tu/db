@@ -115,12 +115,13 @@
 
 `notebooks/unit07.ipynb`
 
-延續 U06 的研討室預約，資料放大到一百萬筆（PostgreSQL 與 SQLite 以相同公式產生）。以「讀了幾頁」衡量成本：§1 以 Python 實作 B+ tree；§2 在 PostgreSQL 上讀計畫、比較各種索引；§3 計算寫入與空間的代價，並在 SQLite 上驗證，最後以工作負載的總頁數選索引。
+延續 U06 的研討室預約，資料放大到一百萬筆（PostgreSQL 與 SQLite 以相同公式產生）。以「讀了幾頁」衡量成本：§0 補上二分搜尋與樹的預備知識；§1 以 Python 實作 B+ tree；§2 在 PostgreSQL 上讀計畫、比較各種索引；§3 計算寫入與空間的代價，並在 SQLite 上驗證，最後以工作負載的總頁數選索引。
 
-- **1 索引的結構**：線性與二分搜尋、以頁計的二分搜尋、排序檔插入的搬移成本；稠密／稀疏索引、多層索引；B+ tree 的節點、葉鏈與查詢（`visit` 計頁）；葉分裂（複製）與內部節點分裂（搬移）、根分裂；`check_tree` 驗證平衡；fanout 與樹高；隨機／依序插入的填滿率與 bulk loading；不合併的刪除；hash 索引。練習 A：以葉鏈做範圍查詢（自動驗收三項，含讀取頁數上限）。
-- **2 PostgreSQL 的計畫與索引**：`EXPLAIN`、`EXPLAIN (ANALYZE, BUFFERS)`；Index Scan、Bitmap Heap Scan、Index Only Scan；`pageinspect` 看 B+ tree 的層數、項目數與（鍵, ctid）；選擇度與 `random_page_cost`；複合索引欄位順序（等值在前、範圍在後）、BitmapAnd、以索引省去排序；部分索引、運算式索引與可搜尋的寫法；哪些條件用不上索引；index-only scan 與 visibility map、`INCLUDE`；`pg_stats` 與過期統計；hash 索引。練習 B：替三個查詢選索引（頁數上限、結果不變、總大小，自動驗收五項）。
+- **0 預備知識**：二分搜尋的迴圈與比較次數（一百萬個鍵：從頭找與二分搜尋）；`bisect_left`／`bisect_right` 回傳切點，查值、數範圍、`insort`；節點與參考（鏈結串列，改參考就能插入）；二元搜尋樹的遞迴插入、沿路搜尋（`visit` 計數）、中序走訪與樹高、依序插入使樹長歪；一個節點放多個分隔鍵，以 `bisect_right` 選子節點。練習 0：以 `bisect` 數 `BETWEEN` 範圍內的鍵、在二元搜尋樹上做範圍查詢（自動驗收四項，含讀取次數）。
+- **1 索引的結構**：以頁計的二分搜尋、排序檔插入的搬移成本；稠密／稀疏索引、多層索引；B+ tree 的節點、葉鏈與查詢（`visit` 計頁）；葉分裂（複製）與內部節點分裂（搬移）、根分裂；`check_tree` 驗證平衡；fanout 與樹高；隨機／依序插入的填滿率與 bulk loading；不合併的刪除；hash 索引。練習 A：以葉鏈做範圍查詢（自動驗收三項，含讀取頁數上限）。
+- **2 PostgreSQL 的計畫與索引**：`EXPLAIN`、`EXPLAIN (ANALYZE, BUFFERS)`；Index Scan、Bitmap Heap Scan、Index Only Scan；`pageinspect` 看 B+ tree 的層數、項目數與（鍵, ctid）；選擇度與 `random_page_cost`；複合索引欄位順序（等值在前、範圍在後）、BitmapAnd、以索引省去排序；部分索引、運算式索引與可搜尋的寫法；哪些條件用不上索引；index-only scan 與 visibility map、`INCLUDE`；`pg_stats` 與過期統計；hash 索引。練習 B：替四個查詢選索引（頁數上限、結果不變、總大小，自動驗收六項）。
 - **3 索引的代價與 SQLite**：索引數與寫入時間、WAL；HOT 更新；索引大小、膨脹與 `REINDEX`；建索引的鎖與 `CONCURRENTLY`；SQLite 的 `COVERING INDEX` 與 `TEMP B-TREE`；外鍵欄沒有索引時刪除父列的成本；rowid 與 `WITHOUT ROWID`；`CLUSTER`、correlation 與 BRIN；列數 × 索引的因子試驗（暖身、7 次中位數與 IQR、對數圖）；工作負載的總頁數帳。練習 C：兩個 SQLite 索引滿足四個操作（不得 SCAN、TEMP B-TREE，自動驗收五項）。
-- **PostgreSQL 挑戰（課後）**：替含寫入的工作負載選至多四個索引：結果不變、每天總頁數與每次寫入頁數在上限內（自動驗收四項）。
+- **PostgreSQL 挑戰（課後）**：替含寫入的工作負載選至多四個索引：結果不變、每天總頁數、Q1 每次頁數與每次寫入頁數在上限內（自動驗收五項）。
 - **課後練習**：以頁數帳說明挑戰的選擇；替專題的工作負載提出並量測索引；由下而上建 B+ tree；在因子試驗加入查詢範圍。
 - **自學延伸**：`pg_trgm` 與 GIN 支援 `LIKE '%…%'`。
 - 讀物：Silberschatz ch14；PostgreSQL 文件〈Indexes〉、〈Using EXPLAIN〉、〈Statistics Used by the Planner〉；SQLite〈Query Planning〉、〈The WITHOUT ROWID Optimization〉。
