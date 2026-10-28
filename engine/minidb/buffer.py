@@ -60,8 +60,10 @@ class LRUList:
 
     def victim(self) -> Frame | None:
         """演算法 6.4.7 第 2 行：由尾端往頭端，傳回第一個沒有被 pin 住的 frame；都被 pin 住（或串列是空的）時傳回 None。"""
-        # 練習 U06-B：LRU 的淘汰 victim（見本回的練習集）
-        raise NotImplementedError("練習 U06-B：LRU 的淘汰 victim")
+        f = self.tail
+        while f is not None and f.pins > 0:
+            f = f.prev
+        return f
 
 
 class BufferPool:
