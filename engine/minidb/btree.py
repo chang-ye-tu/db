@@ -169,8 +169,18 @@ class BPlusTree:
         lo、hi 是鍵的前綴（tuple），None 表示沒有這一側的界。例：索引鍵是 (room_id, start_at) 時，
         range((3,), (3,)) 是 room_id = 3 的所有項目；range((3, t), (3,)) 再加上 start_at ≥ t。
         """
-        # 練習 U07-A：沿著葉鏈做範圍查詢 range（見本回的練習集）
-        raise NotImplementedError("練習 U07-A：沿著葉鏈做範圍查詢 range")
+        first = (lo, LOW_RID) if lo is not None else None
+        no = self.find_leaf(first) if first is not None else self._leftmost_leaf()
+        while no != NONE:
+            with self._visit(no) as leaf:
+                recs, no = self._records_from(leaf, first), leaf.next
+            first = None                             # 之後的葉都從頭讀
+            for rec in recs:
+                key, rid = self._leaf_entry(rec)
+                if _after_hi(key, hi, hi_inclusive):
+                    return                           # 葉鏈依鍵排序：之後的都更大
+                if not _before_lo(key, lo, lo_inclusive):
+                    yield key, rid
 
     def search(self, key: tuple) -> list:
         """鍵等於 key 的所有 RID。"""
@@ -231,8 +241,16 @@ class BPlusTree:
         recs = [leaf.get(k) for k in range(leaf.n_slots)]
         recs.insert(i, rec)
         m = _split_point(recs, 1, len(recs) - 1)
-        # 練習 U07-B：葉分裂 _split_leaf（見本回的練習集）
-        raise NotImplementedError("練習 U07-B：葉分裂 _split_leaf")
+        f = self.pool.new_page(LEAF)
+        right = SlottedPage(f.data)
+        right.next, leaf.next = leaf.next, f.page_no  # 葉鏈：leaf → right → 原本的下一片
+        leaf.clear()
+        for k, r in enumerate(recs[:m]):
+            leaf.insert_at(k, r)
+        for k, r in enumerate(recs[m:]):
+            right.insert_at(k, r)
+        self.pool.unpin(f.page_no, dirty=True)
+        return self._separator(recs[m - 1], recs[m]), f.page_no
 
     def _split_inner(self, node: SlottedPage, i: int, rec: bytes):
         """內部節點分裂（演算法 Insert）：中間的分隔項目「搬」到上一層，
