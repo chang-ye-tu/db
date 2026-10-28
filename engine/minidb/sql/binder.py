@@ -65,8 +65,23 @@ class Scope:
 
     def resolve(self, col: Col) -> ColRef:
         """Col(表, 欄) → ColRef(第幾張表, 第幾欄)。沒寫表名時，所有看得到的表裡只能有一個這個欄名。"""
-        # 練習 U08-C：名稱解析 Scope.resolve（見本回的練習集）
-        raise NotImplementedError("練習 U08-C：名稱解析 Scope.resolve")
+        if col.table is not None and not any(r.alias.lower() == col.table.lower() for r in self.rels):
+            raise BindError(f"沒有表或別名 {col.table}")
+        found = []
+        for i, r in enumerate(self.rels):
+            if col.table is not None and r.alias.lower() != col.table.lower():
+                continue
+            names = [n.lower() for n in r.table.schema.names]
+            if col.name.lower() in names:
+                j = names.index(col.name.lower())
+                label = f"{r.alias}.{r.table.schema.names[j]}" if len(self.rels) > 1 else r.table.schema.names[j]
+                found.append(ColRef(i, j, label))
+        if not found:
+            hint = "（雙引號括起來的是名稱；字串要用單引號）" if col.quoted else ""
+            raise BindError(f"沒有欄 {sql(col)}{hint}")
+        if len(found) > 1:
+            raise BindError(f"欄 {col.name} 有歧義：{', '.join(r.label for r in found)} 都有；請寫成 表.{col.name}")
+        return found[0]
 
 
 def bind_expr(e, scope: Scope, allow_aggregates: bool = False):
@@ -107,8 +122,12 @@ def bind_expr(e, scope: Scope, allow_aggregates: bool = False):
 
 def check_grouped(e, group_by: list) -> None:
     """有分組時：e 裡在彙總函數之外的每個欄，都必須落在某個分組的運算式之內。"""
-    # 練習 U08-D：GROUP BY 的檢查 check_grouped（見本回的練習集）
-    raise NotImplementedError("練習 U08-D：GROUP BY 的檢查 check_grouped")
+    if e in group_by or is_aggregate(e):
+        return
+    if isinstance(e, ColRef):
+        raise BindError(f"欄 {e.label} 要放進 GROUP BY，或用彙總函數包起來")
+    for part in children(e):
+        check_grouped(part, group_by)
 
 
 def bind_select(sel: Select, catalog: Catalog) -> Query:

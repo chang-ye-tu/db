@@ -71,8 +71,8 @@ class LockManager:
 
     def blockers(self, txn, resource, mode: str) -> set:
         """擋住這個請求的交易：持有 resource、而且模式與 mode 不相容的其他交易。"""
-        held = self.held.get(resource, {})
-        return {t for t, m in held.items() if t != txn and not compatible(m, mode)}
+        # 練習 U09-A：鎖的相容性 blockers（見本回的練習集）
+        raise NotImplementedError("練習 U09-A：鎖的相容性 blockers")
 
     def release_all(self, txn) -> None:
         """交易結束（commit 或 rollback）：放掉它所有的鎖，叫醒等待的交易。"""
@@ -92,21 +92,8 @@ class LockManager:
     def find_cycle(self, start) -> list | None:
         """由 start 沿著等待圖的邊做深度優先搜尋（演算法 B.9.8），走得回 start 就是死結：
         傳回環上的交易（由 start 開始），沒有經過 start 的環時傳回 None。"""
-        graph, path, seen = self.wait_for_graph(), [start], {start}
-
-        def dfs(t):
-            for u in sorted(graph.get(t, ())):
-                if u == start:
-                    return list(path)
-                if u not in seen:
-                    seen.add(u)
-                    path.append(u)
-                    found = dfs(u)
-                    if found:
-                        return found
-                    path.pop()
-            return None
-        return dfs(start)
+        # 練習 U09-B：死結偵測 find_cycle（見本回的練習集）
+        raise NotImplementedError("練習 U09-B：死結偵測 find_cycle")
 
 
 class NoLocks:
