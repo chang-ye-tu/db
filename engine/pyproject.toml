@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minidb"
+version = "0.6.0"
+description = "課程「資料庫管理」U06–U09 的教學用關聯資料庫引擎（純 Python）"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+dependencies = ["antlr4-python3-runtime==4.13.2"]
+
+[tool.setuptools.packages.find]
+include = ["minidb*"]
+
+[tool.setuptools.package-data]
+"minidb.sql.sqlite_parser" = ["LICENSE-grammar.txt", "README.txt"]
