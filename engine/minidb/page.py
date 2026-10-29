@@ -124,16 +124,8 @@ class SlottedPage:
 
     def compact(self) -> None:
         """整理（演算法 6.2.6）：依位置由大到小把記錄搬到頁尾排緊，更新槽與記錄區的起點；槽號不變，空的槽保持 (0, 0)。"""
-        live = sorted(((self.slot(i)[0], i) for i in range(self.n_slots) if self.slot(i)[1]),
-                      reverse=True)                  # 從最靠頁尾的記錄開始搬
-        end = len(self.data)
-        for pos, i in live:
-            length = self.slot(i)[1]
-            rec = bytes(self.data[pos:pos + length])
-            end -= length
-            self.data[end:end + length] = rec        # 往頁尾移，不會蓋到還沒搬的記錄
-            self._set_slot(i, end, length)
-        self._set(2, end)
+        # 練習 U06-A：slotted page 的整理 compact（見本回的練習集）
+        raise NotImplementedError("練習 U06-A：slotted page 的整理 compact")
 
     def put(self, i: int, rec: bytes | None) -> None:
         """放回（第 9 章的演算法 9.4.7）：把第 i 槽直接設成 rec（None 表示清空）；槽數不夠就補上空的槽。
