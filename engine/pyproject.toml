@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "minidb"
-version = "0.6.1"
+version = "0.7.1"
 description = "課程「資料庫管理」U06–U09 的教學用關聯資料庫引擎（純 Python）"
 readme = "README.md"
 license = "MIT"
