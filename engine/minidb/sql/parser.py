@@ -266,8 +266,25 @@ class AstBuilder(SQLiteParserVisitor):
         return Item(self.visit(ctx.expr()), alias)
 
     def visitJoin_clause(self, ctx):                 # t (join_operator t join_constraint?)*
-        # 練習 U08-B：Visitor 的 visitJoin_clause（見本回的練習集）
-        raise NotImplementedError("練習 U08-B：Visitor 的 visitJoin_clause")
+        tree, kind = None, None
+        for ch in ctx.children:
+            if isinstance(ch, P.Table_or_subqueryContext):
+                t = self.visit(ch)
+                tree = t if tree is None else Join(kind, tree, t)
+            elif isinstance(ch, P.Join_operatorContext):
+                words = [c.getText().upper() for c in ch.children]
+                if {"NATURAL", "RIGHT", "FULL"} & set(words):
+                    raise NotSupported(f"不支援 {' '.join(words)}")
+                kind = ("CROSS" if words == [","] or "CROSS" in words
+                        else "LEFT" if "LEFT" in words else "INNER")
+            elif isinstance(ch, P.Join_constraintContext):
+                if ch.ON_():
+                    tree.on = self.visit(ch.expr())
+                else:                                # USING (a, b) → 左.a = 右.a AND 左.b = 右.b
+                    cols = [unquote(c.getText()) for c in ch.column_name()]
+                    lt, rt = _rightmost_name(tree.left), _rightmost_name(tree.right)
+                    tree.on = fold_and([BinOp("=", Col(lt, c), Col(rt, c)) for c in cols])
+        return tree
 
     def visitTable_or_subquery(self, ctx):
         if ctx.table_name() is None:

@@ -245,8 +245,21 @@ class HashJoin(Op):
         self.columns = left.columns + right.columns
 
     def rows(self):
-        # 練習 U08-E：HashJoin.rows（見本回的練習集）
-        raise NotImplementedError("練習 U08-E：HashJoin.rows")
+        table = {}
+        for r in self.right:                         # build：右邊讀一次
+            key = tuple(f(r) for f in self.right_keys)
+            if None not in key:                      # NULL 的鍵不放進去，永遠對不上
+                table.setdefault(key, []).append(r)
+        pad = (None,) * len(self.right.columns)
+        for l in self.left:                          # probe：左邊讀一次
+            key = tuple(f(l) for f in self.left_keys)
+            matched = False
+            for r in table.get(key, []) if None not in key else []:
+                if self.residual is None or truth(self.residual(l + r)) == 1:
+                    matched = True
+                    yield l + r
+            if not matched and self.kind == "LEFT":
+                yield l + pad
 
     def children(self):
         return [self.left, self.right]

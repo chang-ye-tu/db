@@ -26,32 +26,11 @@ def redo(records: list, heap_of) -> set:
     """重做（演算法 9.4.10 的第一個迴圈）：重做最後一個 checkpoint 之後的每一筆修改；傳回未完成的交易的集合。
 
     heap_of(表名) 傳回那張表的 HeapFile。"""
-    start, losers = 0, set()
-    for i, r in enumerate(records):
-        if r["type"] == "checkpoint":
-            start, losers = i + 1, set(r["active"])
-    for r in records[start:]:
-        if r["type"] == "begin":
-            losers.add(r["txn"])
-        elif r["type"] in ("commit", "abort"):
-            losers.discard(r["txn"])
-        elif r["type"] in UPDATES:
-            heap_of(r["table"]).apply(r)
-    return losers
+    # 練習 U09-C：重做 redo（見本回的練習集）
+    raise NotImplementedError("練習 U09-C：重做 redo")
 
 
 def undo(records: list, losers: set, heap_of, wal) -> list:
     """撤銷（演算法 9.4.10 的第二個迴圈）：由後往前撤銷 losers 的修改（每一筆寫一筆 CLR），遇到 begin 寫 abort；傳回寫下的 CLR。"""
-    done = {r["undoes"] for r in records if "undoes" in r}
-    clrs, losers = [], set(losers)
-    for r in reversed(records):
-        if not losers:
-            break
-        if r["txn"] not in losers:
-            continue
-        if r["type"] in ("insert", "delete") and "undoes" not in r and r["lsn"] not in done:
-            clrs.append(compensate(wal, heap_of(r["table"]), r, r["txn"]))
-        elif r["type"] == "begin":
-            wal.append(r["txn"], "abort")
-            losers.discard(r["txn"])
-    return clrs
+    # 練習 U09-D：撤銷 undo（見本回的練習集）
+    raise NotImplementedError("練習 U09-D：撤銷 undo")
